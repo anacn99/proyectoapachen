@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  asir-apache:
+    image: php:7.4-apache
+    container_name: asir-apache
+    ports:
+      - '80:80'
+    volumes:
+      - ./html:/var/www/html/
+      - ./confApache:/etc/apache2
+    networks:
+      apache_subnet:
+        ipv4_address: 10.2.0.4
+    dns:
+      - 10.2.0.3
+
+  asir_bind9:
+    container_name: asir_bind
+    image: internetsystemsconsortium/bind9:9.16
+    networks:
+      apache_subnet:
+        ipv4_address: 10.2.0.3
+    volumes:
+      - /home/asir2a/Documentos/proyectoApache/confDNS:/etc/bind
+      - /home/asir2a/Documentos/proyectoApache/zonas:/var/lib/bind
+
+  firefox:
+    container_name: asir_firefox
+    image: jlesage/firefox
+    ports:
+      - 5800:5800
+    networks:
+      apache_subnet:
+        ipv4_address: 10.2.0.32
+    volumes:
+      - /home/asir2a/Documentos/proyectoApache/Firefox:/config:rw
+    dns:
+      - 10.2.0.3
+networks:
+  apache_subnet:
+    external: true
+
