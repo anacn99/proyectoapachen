@@ -41,5 +41,3 @@ Como el puerto 443 lo escucha por defecto si está activado el módulo de ssl no
 Como podemos ver, funciona correctamente.
 
 ![https](SSLSITE.png)
-
-### Wireshark
